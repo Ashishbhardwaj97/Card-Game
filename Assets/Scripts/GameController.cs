@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         GetButtons();
+        AddListeners();
     }
 
     void GetButtons()
@@ -23,5 +24,18 @@ public class GameController : MonoBehaviour
             btns.Add(objects[i].GetComponent<Button>());
             btns[i].image.sprite = bgImage;
         }
+    }
+
+    void AddListeners()
+    {
+        foreach(Button btn in btns)
+        {
+            btn.onClick.AddListener(() => PickAPuzzle());
+        }
+    }
+
+    public void PickAPuzzle()
+    {
+        string currentSelectedButtonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
     }
 }
