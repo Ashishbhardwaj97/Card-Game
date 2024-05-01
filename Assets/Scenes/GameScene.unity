@@ -250,7 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c50e6578286b34282bae64af0827ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgImage: {fileID: 21300000, guid: 4de282ffd945f4ed6a6fd16ab2fecd3d, type: 3}
+  bgImage: {fileID: 21300000, guid: 47d55a0a093944c498024cd288893d02, type: 3}
+  puzzles: []
+  gamePuzzles: []
   btns: []
 --- !u!1 &725907161
 GameObject:
