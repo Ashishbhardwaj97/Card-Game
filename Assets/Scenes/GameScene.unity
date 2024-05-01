@@ -597,7 +597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puzzleField: {fileID: 976855511}
-  btn: {fileID: 3351991649928737605, guid: c742433e8db309146b2c370bc1c9cfef, type: 3}
+  btn: {fileID: 6032378902604025041, guid: 131db8d19d39b724ba79d0e33c70e18d, type: 3}
 --- !u!4 &721132401
 Transform:
   m_ObjectHideFlags: 0
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c50e6578286b34282bae64af0827ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 3351991649928737605, guid: c742433e8db309146b2c370bc1c9cfef, type: 3}
+  btn: {fileID: 6032378902604025041, guid: 131db8d19d39b724ba79d0e33c70e18d, type: 3}
   bgImage: {fileID: 21300000, guid: 47d55a0a093944c498024cd288893d02, type: 3}
   Turns: {fileID: 1580977548}
   Matches: {fileID: 727927188}

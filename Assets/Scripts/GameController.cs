@@ -124,7 +124,6 @@ public class GameController : MonoBehaviour
             StartCoroutine(CheckIfPuzzleMatch());
         }
     }
-    
 
     IEnumerator CheckIfPuzzleMatch()
     {
