@@ -7,6 +7,9 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     [SerializeField]
+    private GameObject btn;
+
+    [SerializeField]
     private Sprite bgImage;
 
     [SerializeField]
@@ -20,6 +23,7 @@ public class GameController : MonoBehaviour
     public List<Sprite> gamePuzzles = new List<Sprite>();
 
     public List<Button> btns = new List<Button>();
+    public List<Animator> animators = new List<Animator>();
 
     private bool firstGuess, secondGuess;
 
@@ -30,6 +34,11 @@ public class GameController : MonoBehaviour
 
     private string firstGuessPuzzle, secondGuessPuzzle;
 
+    private AudioSource audioSource;
+    public AudioClip gameOverClip;
+    public AudioClip cardMatchClip;
+    public AudioClip cardMismatchClip;
+
     private void Awake()
     {
         puzzles = Resources.LoadAll<Sprite>("Character");
@@ -37,6 +46,11 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        Matches.text = PlayerPrefs.GetInt("MatchesScore", 0).ToString();
+        Turns.text = PlayerPrefs.GetInt("TurnsScore", 0).ToString();
+
+        audioSource = GetComponent<AudioSource>();
+
         GetButtons();
         AddListeners();
         AddGamePuzzles();
@@ -52,6 +66,11 @@ public class GameController : MonoBehaviour
         {
             btns.Add(objects[i].GetComponent<Button>());
             btns[i].image.sprite = bgImage;
+        }
+
+        for (int i = 0; i < objects.Length; i++)
+        {
+            animators.Add(objects[i].GetComponent<Animator>());
         }
     }
 
@@ -105,6 +124,7 @@ public class GameController : MonoBehaviour
             StartCoroutine(CheckIfPuzzleMatch());
         }
     }
+    
 
     IEnumerator CheckIfPuzzleMatch()
     {
@@ -118,13 +138,22 @@ public class GameController : MonoBehaviour
             btns[secondGuessIndex].interactable = false;
             btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
             btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
-
+            if (audioSource != null && cardMatchClip != null)
+            {
+                audioSource.clip = cardMatchClip;
+                audioSource.Play();
+            }
             CheckIfGameIsFinished();
         }
         else
         {
             yield return new WaitForSeconds(0.5f);
 
+            if (audioSource != null && cardMismatchClip != null)
+            {
+                audioSource.clip = cardMismatchClip;
+                audioSource.Play();
+            }
             btns[firstGuessIndex].image.sprite = bgImage;
             btns[secondGuessIndex].image.sprite = bgImage;
         }
@@ -140,6 +169,15 @@ public class GameController : MonoBehaviour
         if (countCorrectGuesses == gameGuesses)
         {
             print("Done");
+            Matches.text = "0";
+            Turns.text = "0";
+
+            if (audioSource != null && gameOverClip != null)
+            {
+                // Play the AudioClip
+                audioSource.clip = gameOverClip;
+                audioSource.Play();
+            }
         }
     }
 
@@ -152,5 +190,12 @@ public class GameController : MonoBehaviour
             list[i] = list[randomIndex];
             list[randomIndex] = temp;
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("TurnsScore", int.Parse(Turns.text));
+        PlayerPrefs.SetInt("MatchesScore", int.Parse(Matches.text));
+        PlayerPrefs.Save();
     }
 }
